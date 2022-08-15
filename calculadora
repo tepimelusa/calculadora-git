@@ -119,12 +119,15 @@ class calculadora():
 			self.resultado=self.num1/self.num2
 		else:
 			self.resultado="ERROR"
-		
+		if str(self.resultado).endswith(".0"):
+			'''endswith lo uso para saber el final de una cadena de caracteres'''
+			self.resultado=int(self.resultado)
+			print("he cambiado el resultado de float a entero")
 	
 
 
-		if ".0 " in str(self.resultado) or self.resultado==int(self.resultado):
-			self.resultado=int(self.resultado)	
+		'''if  self.resultado==int(self.resultado):
+			self.resultado=int(self.resultado)'''	
 		
 		
 		self.numeroPantalla.set(self.resultado)
