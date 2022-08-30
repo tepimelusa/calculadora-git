@@ -2,22 +2,72 @@ from tkinter import *
 import random
 from math import*
 class calculadora():
-	#error pponer muchos puntos
+	#contrlar que despues de operacion mete un espacio en blanco
+	#  y si le das al igual sin meter nada da error
+	#controlar que solo se pueda introducir digtos desde pantalla no teclado
+	
 	
 	def botonPulsado(self,num):
-		texto=self.numeroPantalla.get()+num
-		print("valor string: ",texto, "valor posicion 0: ",texto[0], " y longitud:", len(texto))
-		if texto[0] =="0" and len(texto)>1 and texto[1]==self.separador:
-			print("se conserva el 0")
-		elif texto[0] =="0" and len(texto)==1:
-			print("es cero a la izquierda y pudiera ser que luego en algun caso se introduzca ,")
-		elif texto[0] != "0" :
-			print("no hay problema")
-		elif texto[0] =="0" and len(texto)>1 :
-			print("es cero a la izquierda y habria que sustituirlo")
-			texto=texto[1:]
+			
 
-		self.numeroPantalla.set(texto)
+
+		#comprueba que ha sido introucida anteriormente una operación y al pulsar boton borra el num
+		if self.comprobacionOperacion==True:
+			self.numeroPantalla.set("0")
+			self.comprobacionOperacion=False
+		
+		if self.numeroPantalla.get() == self.mensajeError:
+			self.numeroPantalla.set("0")
+		
+		
+		texto=self.numeroPantalla.get()
+
+		'''if texto.__contains__(self.separador) and num==".":
+			
+			print("hay 2 punto")
+			texto=self.numeroPantalla.get()'''
+
+		if self.separador in texto and num==".":
+			print("hay 2 puntos")
+			texto=self.numeroPantalla.get()	
+
+		
+
+		 #comprueba si find encuentra  un punto (distinto a resutado -1)y si num es . ó si find no encuentra .
+			'''if (texto.find(self.separador)!=-1 and num!='.') or texto.find(self.separador)==-1:
+			
+			#print("hay punto en texto: ",texto, " y el self.boton pulsado es: ",num," No deberia hacer nada")
+		
+			
+			#texto=texto[:len(texto)-1]'''
+		else:
+
+			texto=self.numeroPantalla.get()+num
+
+			'''if texto.count(self.separador)>1:
+				texto=texto[:len(texto)-1]'''
+				
+				
+
+			
+			print("valor string: ",texto, "valor posicion 0: ",texto[0], " y longitud:", len(texto))
+			'''
+				if texto[0] =="0" and len(texto)>1 and texto[1]==self.separador:
+					print("se conserva el 0")
+				elif texto[0] =="0" and len(texto)==1:
+					print("es cero a la izquierda y pudiera ser que luego en algun caso se introduzca ,")
+				elif texto[0] != "0" :
+					print("no hay problema")
+				elif texto[0] =="0" and len(texto)>1 :
+					print("es cero a la izquierda y habria que sustituirlo")
+					texto=texto[1:]
+					'''
+
+			if texto[0] =="0" and len(texto)>1 and texto[1] != ".":
+				print("es cero a la izquierda y habria que sustituirlo")
+				texto=texto[1:]
+
+			self.numeroPantalla.set(texto)
 
 	def borrartodo(self):
 		self.numeroPantalla.set("0")
@@ -44,23 +94,28 @@ class calculadora():
 
 	#	print("En numeroPantalla.get() tengo...",numeroPantalla.get(), " y soy  tipo... ",type(numeroPantalla.get()))
 	#def cambiarNumeros():
-	#	boton0["text"]=random.randint(0,20)
-	#	boton1["text"]=random.randint(0,20)
-	#	boton2["text"]=str(random.randint(0,20))
-	#	boton3["text"]=str(random.randint(0,20))	
-	#	boton6["text"]=str(random.randint(0,20))
-	#	boton7["text"]=random.randint(0,20)
-	#	boton8["text"]=str(random.randint(0,20))	
-	#	boton9["text"]=str(random.randint(0,20))
+	#	self.boton0["text"]=random.randint(0,20)
+	#	self.boton1["text"]=random.randint(0,20)
+	#	self.boton2["text"]=str(random.randint(0,20))
+	#	self.boton3["text"]=str(random.randint(0,20))	
+	#	self.boton6["text"]=str(random.randint(0,20))
+	#	self.boton7["text"]=random.randint(0,20)
+	#	self.boton8["text"]=str(random.randint(0,20))	
+	#	self.boton9["text"]=str(random.randint(0,20))
 
 
 	#-----FUNCION SUMA----------
 	def operaciones(self,operacion):
+		
+	
+		self.restablecerColores()
 		print("recibo operacion: ",operacion)
 		self.operador=operacion
 		print("mi operador guardado en la funcion: ",self.operador)
 		self.num1=float(self.numeroPantalla.get())
-		self.numeroPantalla.set("")
+		print(self.numeroPantalla.get())
+		self.comprobacionOperacion=True
+		#self.numeroPantalla.set("")
 
 
 	'''
@@ -101,28 +156,38 @@ class calculadora():
 		print("operador en division",operador)
 		numeroPantalla.set("")
 	'''
-
+	def restablecerColores(self):
+		self.botondiv.configure(bg="#d9d9d9")
+		self.botonmult.configure(bg="#d9d9d9")
+		self.botonsuma.configure(bg="#d9d9d9")
+		self.botonrest.configure(bg="#d9d9d9")
 
 	def igual(self):
 		
 		self.resultado=""
+		self.restablecerColores()
 		print("En igual operador tiene valor: ", self.operador)
 		self.num2=float(self.numeroPantalla.get())
 		print("Valor num1: ",self.num1, " y valor num2: ", self.num2)
 		if self.operador=="+":
+			self.botonsuma.configure(bg="blue")
 			self.resultado=self.num1+self.num2
 		elif self.operador=="-":
+			self.botonrest.configure(bg="blue")
 			self.resultado=self.num1-self.num2
 		elif self.operador=="X":
+			self.botonmult.configure(bg="blue")
 			self.resultado=self.num1*self.num2
 		elif self.operador=="/":
+			self.botondiv.configure(bg="blue")
 			self.resultado=self.num1/self.num2
 		else:
-			self.resultado="ERROR"
+			self.resultado=self.mensajeError
 		if str(self.resultado).endswith(".0"):
 			'''endswith lo uso para saber el final de una cadena de caracteres'''
 			self.resultado=int(self.resultado)
 			print("he cambiado el resultado de float a entero")
+		
 	
 
 
@@ -133,6 +198,7 @@ class calculadora():
 		self.numeroPantalla.set(self.resultado)
 		print(type(self.numeroPantalla))
 		print(type(self.numeroPantalla.get()))
+		self.comprobacionOperacion=True
 	
 	def inicio_calculadora(self):
 		self.raiz=Tk()
@@ -148,12 +214,13 @@ class calculadora():
 		self.resultado=0
 		self.operador=""
 		self.separador="."
-
-
-		self.pantalla=Entry(self.miFrame,textvariable=self.numeroPantalla)
+		self.mensajeError="ERROR"
+		self.guardarnum="0"
+		self.pantalla=Entry(self.miFrame,textvariable=self.numeroPantalla,state="readonly")
 		self.pantalla.grid(row=1, column=1, padx=10, pady=10, columnspan=4)
-		self.pantalla.config(background="black",fg="#7879b2", justify="right")
-
+		self.pantalla.config(background="black",fg="#7879b2", justify="right",readonlybackground="black")
+		self.comprobacionOperacion=False
+		self.numpunto=0
 
 		#global num1
 		#num1=int(numeroPantalla.get())
@@ -171,61 +238,65 @@ class calculadora():
 
 
 		#--------FILA 1 NUMEROS---------
-		boton7=Button(self.miFrame, text="7", width=3,command=lambda:self.botonPulsado(boton7['text']))
-		boton7.grid(row=2, column=1)
-		boton8=Button(self.miFrame, text="8", width=3,command=lambda:self.botonPulsado(boton8['text']))
-		boton8.grid(row=2, column=2)
-		boton9=Button(self.miFrame, text="9", width=3,command=lambda:self.botonPulsado(boton9['text']))
-		boton9.grid(row=2, column=3)
-		botondiv=Button(self.miFrame, text="/", width=3,command=lambda:calculadora.operaciones(botondiv['text']))
-		botondiv.grid(row=2, column=4)
+		self.boton7=Button(self.miFrame, text="7", width=3,command=lambda:self.botonPulsado(self.boton7['text']))
+		self.boton7.grid(row=2, column=1)
+		self.boton8=Button(self.miFrame, text="8", width=3,command=lambda:self.botonPulsado(self.boton8['text']))
+		self.boton8.grid(row=2, column=2)
+		self.boton9=Button(self.miFrame, text="9", width=3,command=lambda:self.botonPulsado(self.boton9['text']))
+		self.boton9.grid(row=2, column=3)
+		self.botondiv=Button(self.miFrame, text="/", width=3,command=lambda:self.operaciones(self.botondiv['text']))
+		self.botondiv.grid(row=2, column=4)
 
 
 		#-------FILA 2 NUMEROS-----------
-		boton4=Button(self.miFrame, text="4", width=3, command=lambda:self.botonPulsado(boton4['text']))
-		boton4.grid(row=3, column=1)
-		boton5=Button(self.miFrame, text="5", width=3,command=lambda:self.botonPulsado(boton5['text']))
-		boton5.grid(row=3, column=2)
-		boton6=Button(self.miFrame, text="6", width=3,command=lambda:self.botonPulsado(boton6['text']))
-		boton6.grid(row=3, column=3)
-		botonmult=Button(self.miFrame, text="X", width=3,command=lambda:self.operaciones(botonmult['text']))
-		botonmult.grid(row=3, column=4)
+		self.boton4=Button(self.miFrame, text="4", width=3, command=lambda:self.botonPulsado(self.boton4['text']))
+		self.boton4.grid(row=3, column=1)
+		self.boton5=Button(self.miFrame, text="5", width=3,command=lambda:self.botonPulsado(self.boton5['text']))
+		self.boton5.grid(row=3, column=2)
+		self.boton6=Button(self.miFrame, text="6", width=3,command=lambda:self.botonPulsado(self.boton6['text']))
+		self.boton6.grid(row=3, column=3)
+		self.botonmult=Button(self.miFrame, text="X", width=3,command=lambda:self.operaciones(self.botonmult['text']))
+		self.botonmult.grid(row=3, column=4)
 
 		#------FILA 3 NUMEROS --------
-		boton1=Button(self.miFrame, text="1", width=3,command=lambda:self.botonPulsado(boton1['text']))
-		boton1.grid(row=4, column=1)
-		boton2=Button(self.miFrame, text="2", width=3,command=lambda:self.botonPulsado(boton2['text']))
-		boton2.grid(row=4, column=2)
-		boton3=Button(self.miFrame, text="3", width=3,command=lambda:self.botonPulsado(boton3['text']))
-		boton3.grid(row=4, column=3)
-		botonrest=Button(self.miFrame, text="-", width=3,command=lambda:self.operaciones(botonrest['text']))
-		botonrest.grid(row=4, column=4)
+		self.boton1=Button(self.miFrame, text="1", width=3,command=lambda:self.botonPulsado(self.boton1['text']))
+		self.boton1.grid(row=4, column=1)
+		self.boton2=Button(self.miFrame, text="2", width=3,command=lambda:self.botonPulsado(self.boton2['text']))
+		self.boton2.grid(row=4, column=2)
+		self.boton3=Button(self.miFrame, text="3", width=3,command=lambda:self.botonPulsado(self.boton3['text']))
+		self.boton3.grid(row=4, column=3)
+		self.botonrest=Button(self.miFrame, text="-", width=3,command=lambda:self.operaciones(self.botonrest['text']))
+		self.botonrest.grid(row=4, column=4)
 
 
 		#------FILA 4 NUMEROS--------
-		botoncoma=Button(self.miFrame, text=self.separador, width=3,command=lambda:self.botonPulsado(botoncoma['text']))
-		botoncoma.grid(row=5, column=1)
-		boton0=Button(self.miFrame, text="0", width=3,command=lambda:self.botonPulsado(boton0['text']))
-		boton0.grid(row=5, column=2)
-		botonigual=Button(self.miFrame, text="=", width=3,command=lambda:self.igual())
-		botonigual.grid(row=5, column=3)
-		botonsuma=Button(self.miFrame, text="+", width=3,command=lambda:self.operaciones(botonsuma['text']))
-		botonsuma.grid(row=5, column=4)
+		self.botonseparador=Button(self.miFrame, text=self.separador, width=3,command=lambda:self.botonPulsado(self.botonseparador['text']))
+		self.botonseparador.grid(row=5, column=1)
+		self.boton0=Button(self.miFrame, text="0", width=3,command=lambda:self.botonPulsado(self.boton0['text']))
+		self.boton0.grid(row=5, column=2)
+		self.botonigual=Button(self.miFrame, text="=", width=3,command=lambda:self.igual())
+		self.botonigual.grid(row=5, column=3)
+		self.botonsuma=Button(self.miFrame, text="+", width=3,command=lambda:self.operaciones(self.botonsuma['text']))
+		self.botonsuma.grid(row=5, column=4)
 
 		#-------FILA TECLA BORRAR---------
-		botonborrar=Button(self.miFrame,text="C", width=9,command=lambda:self.borrartodo())
-		botonborrar.grid(row=6, column=2,columnspan=2)
+		self.botonborrar=Button(self.miFrame,text="C", width=9,command=lambda:self.borrartodo())
+		self.botonborrar.grid(row=6, column=2,columnspan=2)
 
-		#------FILA BOTON BORRAR 1 DIGITO------
-		botonborultnum=Button(self.miFrame, text="<--",width=3, command=lambda:self.borrarnum() )
-		botonborultnum.grid(row=6, column=1)
+		#------FILA self.boton BORRAR 1 DIGITO------
+		self.botonborultnum=Button(self.miFrame, text="<--",width=3, command=lambda:self.borrarnum() )
+		self.botonborultnum.grid(row=6, column=1)
 
-		botonprueba=Button(self.miFrame, text="?",width=3 , command= lambda:self.prueba())
-		botonprueba.grid(row=6, column=5)
+		self.botonprueba=Button(self.miFrame, text="?",width=3 , command= lambda:self.prueba())
+		self.botonprueba.grid(row=6, column=5)
 
 
 		self.numeroPantalla.set("0")
 		print(type(self.numeroPantalla.get()))
+
+		#-----------controlar los puntos----------
+
+
 
 
 		self.raiz.mainloop()

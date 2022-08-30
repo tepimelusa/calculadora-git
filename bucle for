@@ -1,0 +1,71 @@
+'''numeroenpantalla="12.345"
+for i in numeroenpantalla:
+    print(i)
+    if i==".":'''
+
+'''cadena="paquito"
+
+print (cadena.startswith("pa"))
+
+startswith("pablito")
+print(starswith("pablito"))
+
+
+print("pablito".startswith("ma"))'''
+cadena="hola mundo"
+print (cadena.title())
+cadena="estoym probandom msplitr desdem ahoram"
+cadena_cortada=cadena.split("m")
+print(cadena_cortada)
+print (type(cadena.split("m")[3]))
+print (cadena.split("m")[3])
+print (cadena.split("m")[3].capitalize().replace("r","g"))
+print(cadena.split("m") [1].replace("probando","B"))
+print(cadena.split("m")[1][4].capitalize().lower())
+
+texto="123.456."
+print (len(texto))
+
+
+
+texto = "mi diario python"
+print(texto.find("dia"))
+
+operador="123.45.6"
+print("Resultado find: ",operador.find("."))
+#print("Resultado index: ",operador.index("."))
+print("resultado count: ", operador.count("."))
+print("Resultado contains: ", operador.__contains__("."))
+
+operador1="123.45.6"
+print("resultado count: ",operador1.count("."))
+if operador1.count(".")==1:
+    print ("solo hay un punto")
+    
+else:
+    print("hay mas de un punto")
+
+
+texto1="123.456."
+print ("la longitud de texto1 es: ",len(texto1))
+print ("ahora la longitud de texto1 es: ",len(texto1)-1)
+print (texto1[:len(texto1)])
+
+
+texto2="345.67."
+num="0"
+print ("esto es lo que me devuelcve find: ",texto2.find("."))
+
+
+texto3="345.65.7"
+num="0"
+print ("esto es lo q me devuelve contains: ", texto3.__contains__("."))
+if texto3.__contains__(".") and :
+
+
+
+
+    
+
+else:
+    texto3=texto3+num
